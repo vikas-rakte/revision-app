@@ -1,0 +1,60 @@
+.edit-user-form {
+  max-width: 500px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+}
+.edit-user-form h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #2d3748;
+}
+.edit-user-form label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #4a5568;
+  font-weight: 500;
+}
+.edit-user-form input {
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 1rem;
+  background: #f7fafc;
+  transition: border 0.2s;
+}
+.edit-user-form input:focus {
+  border: 1.5px solid #3182ce;
+  outline: none;
+}
+.edit-user-form fieldset {
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  background: #f9fafb;
+}
+.edit-user-form legend {
+  font-size: 1rem;
+  color: #2b6cb0;
+  font-weight: 600;
+}
+.edit-user-form button[type="submit"] {
+  width: 100%;
+  padding: 0.75rem;
+  background: #3182ce;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.edit-user-form button[type="submit"]:hover {
+  background: #2563eb;
+}

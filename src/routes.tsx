@@ -59,12 +59,26 @@ const router = createBrowserRouter([
       },
       {
         path: "users",
-        lazy: async () => {
-          const module = await import("./components/Users/Users");
-          return {
-            Component: module.default,
-          };
-        },
+        children: [
+          {
+            path: "",
+            lazy: async () => {
+              const module = await import("./components/Users/Users");
+              return {
+                Component: module.default,
+              };
+            },
+          },
+          {
+            path: ":id",
+            lazy: async () => {
+              const module = await import("./components/Users/EditUserDetails");
+              return {
+                Component: module.default,
+              };
+            },
+          },
+        ],
       },
       { path: "counter", element: <Counter /> },
       { path: "*", element: <NotFound /> },

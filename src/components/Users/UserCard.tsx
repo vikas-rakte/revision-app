@@ -1,9 +1,18 @@
 import React from "react";
 import type { User } from "./UserType";
 
-function UserCard({ user }: { user: User }) {
+function UserCard({
+  user,
+  openUserDetails,
+}: {
+  user: User;
+  openUserDetails: (user: User) => void;
+}) {
   return (
     <div className="card">
+      <div>
+        <button onClick={() => openUserDetails(user)}>Edit</button>
+      </div>
       <div className="header">
         <h2>{user.name}</h2>
         <p className="username">@{user.username}</p>

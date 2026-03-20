@@ -5,3 +5,24 @@ export const fetchAllUsers = async () => {
     const data: User[] =  await res.json();
     return data;
 } 
+
+
+export const fetchUserInfo = async (id: string) => {
+    const res = await fetch(`https://jsonplaceholder.typicode.com/users/${id}`);
+    const data: User =  await res.json();
+    return data;
+} 
+
+
+
+export const updateUser = async (id, payload) => {
+    const res = await fetch(`https://jsonplaceholder.typicode.com/users/${id}`,{
+    method: 'PUT',
+       body: JSON.stringify(payload),
+        headers: {
+            'Content-type': 'application/json',
+        }
+    });
+    const data =  await res.json();
+    return data;
+} 
