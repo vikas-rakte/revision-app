@@ -1,27 +1,24 @@
-import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import { todoLoader } from "../Loader/todos.loader";
+import { Link, useLoaderData } from "react-router-dom";
 import { type AppDispatch } from "../../../store";
 import { setTodos, todosSelectors } from "../todos-slice/todo.slice";
+import type { Todo } from "../todos.types";
+import { useEffect } from "react";
 
 const Todos = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const todos = useSelector(todosSelectors.selectAll);
+  const loaderTodos = useLoaderData();
+  const todos = useSelector(todosSelectors.selectAll) as Todo[];
 
   useEffect(() => {
-    const getTodos = async () => {
-      const todos = await todoLoader();
-      dispatch(setTodos(todos));
-    };
-    getTodos();
-  }, [dispatch]);
+    if (todos.length === 0) dispatch(setTodos(loaderTodos));
+  }, [dispatch, loaderTodos, todos.length]);
 
   return (
     <div>
       <h2>Todos</h2>
       <ul>
-        {todos.map((todo) => (
+        {todos.map((todo: Todo) => (
           <li key={todo.id}>
             <Link to={`/todos/${todo.id}`}>
               <strong>{todo.title}</strong> {todo.completed ? "✅" : "❌"}
