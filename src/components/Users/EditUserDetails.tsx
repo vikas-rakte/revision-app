@@ -10,6 +10,15 @@ import { useEffect } from "react";
 const EditUserDetails = () => {
   const { id } = useParams();
   const queryClient = useQueryClient();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    reset,
+    setError,
+  } = useForm<User>();
+
   const mutate = useMutation({
     mutationFn: (data: User) => {
       return updateUser(id, data);
@@ -24,14 +33,6 @@ const EditUserDetails = () => {
       queryClient.invalidateQueries({ queryKey: ["users"] });
     },
   });
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-    reset,
-    setError,
-  } = useForm<User>();
 
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ["users", id],
