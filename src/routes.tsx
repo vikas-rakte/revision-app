@@ -4,15 +4,17 @@ import Layout from "./components/Layout";
 import AuthGuard from "./components/Auth/AuthGard";
 import NotFound from "./components/NotFound/NotFound";
 import Login from "./components/Auth/Login";
-import todoDetailsLoader from "./components/Todos/TodoDetailsLoader";
+import todoDetailsLoader from "./components/Todos/Loader/TodoDetailsLoader";
 import Counter from "./components/Counter/Counter";
 import { Suspense } from "react";
 import Loader from "./components/Loader/Loader";
 import React from "react";
-import { todoLoader } from "./components/Todos/todosLoader";
+import { todoLoader } from "./components/Todos/Loader/todosLoader";
 
-const TodoDetails = React.lazy(() => import("./components/Todos/TodoDetails"));
-const Todos = React.lazy(() => import("./components/Todos/Todos"));
+const TodoDetails = React.lazy(
+  () => import("./components/Todos/TodoDetails/TodoDetails"),
+);
+const Todos = React.lazy(() => import("./components/Todos/Todos/Todos"));
 const Posts = React.lazy(() => import("./components/Posts/Posts"));
 
 const router = createBrowserRouter([

@@ -1,17 +1,18 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { addManyTodos, type AppDispatch, type RootState } from "../../store";
-import { todoLoader } from "./todosLoader";
+import { todoLoader } from "../Loader/todosLoader";
+import { type AppDispatch } from "../../../store";
+import { setTodos, todosSelectors } from "../Slice/todoSlice";
 
 const Todos = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const todos = useSelector((state: RootState) => state.todos);
+  const todos = useSelector(todosSelectors.selectAll);
 
   useEffect(() => {
     const getTodos = async () => {
       const todos = await todoLoader();
-      dispatch(addManyTodos(todos));
+      dispatch(setTodos(todos));
     };
     getTodos();
   }, [dispatch]);

@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { updateUser } from "../userApi";
 import type { UseFormSetError } from "react-hook-form";
 import type { User } from "../user.types";
+import { updateUser } from "../user.api";
 
 export const useUpdateUser = (
   id: string,
