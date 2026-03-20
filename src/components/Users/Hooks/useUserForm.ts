@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
-import type { User } from "./UserType";
 import { useEffect } from "react";
+import type { User } from "../user.types";
 
 export const useUserForm = (data: User | undefined) => {
   const form = useForm<User>();

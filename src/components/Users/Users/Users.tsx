@@ -1,10 +1,9 @@
-import "./user.css";
-import UserCard from "./UserCard";
-
-import Loader from "../Loader/Loader";
-import useUsers from "./useUsers";
-import type { User } from "./UserType";
+import Loader from "../../Loader/Loader";
+import useUsers from "../Hooks/useUsers";
 import { useNavigate } from "react-router-dom";
+import type { User } from "../user.types";
+import UserCard from "../UserCard/UserCard";
+import "../user.css";
 
 const Users = () => {
   const { users, isLoading, isError, error } = useUsers();

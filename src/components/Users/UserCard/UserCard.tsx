@@ -1,5 +1,5 @@
 import React from "react";
-import type { User } from "./UserType";
+import type { User } from "../user.types";
 
 function UserCard({
   user,

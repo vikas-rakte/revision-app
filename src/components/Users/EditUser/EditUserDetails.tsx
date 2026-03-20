@@ -1,11 +1,11 @@
 import { useParams } from "react-router-dom";
-import { useUserQuery } from "./useUserQuery";
-import { useUserForm } from "./useUserForm";
-import { useUpdateUser } from "./useUpdateUser";
-import Loader from "../Loader/Loader";
-import type { User } from "./UserType";
+import { useUserQuery } from "../Hooks/useUserQuery";
+import { useUserForm } from "../Hooks/useUserForm";
+import { useUpdateUser } from "../Hooks/useUpdateUser";
+import Loader from "../../Loader/Loader";
 import "./EditUserDetails.css";
 import React from "react";
+import type { User } from "../user.types";
 
 const EditUserDetails = () => {
   const { id = "" } = useParams<{ id: string }>();

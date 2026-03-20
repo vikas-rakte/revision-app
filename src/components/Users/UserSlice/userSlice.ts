@@ -1,5 +1,5 @@
 import { createEntityAdapter, createSlice } from "@reduxjs/toolkit";
-import type { User } from "./UserType";
+import type { User } from "../user.types";
 
 
 // ✅ Adapter
