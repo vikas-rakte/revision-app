@@ -10,7 +10,8 @@ const useUsers = ()=>{
   } = useQuery({
     queryKey: ["users"],
     queryFn: getUsers,
-    staleTime: 1000 * 60 * 1, // 1 minutes
+    staleTime: 1000 * 60 , // 1 minutes
+   // refetchInterval: 5000
   });
 
   return { users, isLoading, isError, error }
