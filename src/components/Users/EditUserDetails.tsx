@@ -4,12 +4,26 @@ import Loader from "../Loader/Loader";
 import { useParams } from "react-router-dom";
 import "./EditUserDetails.css";
 import { useForm } from "react-hook-form";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 
 const EditUserDetails = () => {
   const { id } = useParams();
   const queryClient = useQueryClient();
+  const mutate = useMutation({
+    mutationFn: (data: User) => {
+      return updateUser(id, data);
+    },
+    onMutate: () => {},
+    onError: () => {
+      setError("root", {
+        message: "Failed to save user",
+      });
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["users"] });
+    },
+  });
 
   const {
     register,
@@ -36,15 +50,8 @@ const EditUserDetails = () => {
     return <p>{(error as Error)?.message || "Failed to load user"}</p>;
   }
 
-  const onSubmit = async (formData: User) => {
-    try {
-      const res = await updateUser(id, formData);
-      queryClient.invalidateQueries({ queryKey: ["users"] });
-    } catch {
-      setError("root", {
-        message: "Failed to save user",
-      });
-    }
+  const onSubmit = (formData: User) => {
+    mutate.mutate(formData);
   };
 
   return (
