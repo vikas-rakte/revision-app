@@ -1,7 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
-import { type AppDispatch, type RootState } from "../../store";
+import { type AppDispatch, type RootState } from "../../../store";
 import { useEffect } from "react";
-import { fetchPosts, type Post } from "./PostsSlice";
+import type { Post } from "../posts.types";
+import { fetchPosts } from "../posts-slice/posts.slice";
 
 const Posts = () => {
   const dispatch = useDispatch<AppDispatch>();

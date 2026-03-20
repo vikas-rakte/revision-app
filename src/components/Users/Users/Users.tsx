@@ -2,8 +2,8 @@ import Loader from "../../Loader/Loader";
 import useUsers from "../Hooks/useUsers";
 import { useNavigate } from "react-router-dom";
 import type { User } from "../user.types";
-import UserCard from "../UserCard/UserCard";
 import "../user.css";
+import UserCard from "../user-card/user-card";
 
 const Users = () => {
   const { users, isLoading, isError, error } = useUsers();

@@ -24,8 +24,8 @@ const EditUserDetails = () => {
   if (isLoading) return <Loader />;
   if (isError) return <p>{error.message}</p>;
 
-  const onSubmit = (data: User) => {
-    mutation.mutate(data);
+  const onSubmit = async (data: User) => {
+    await mutation.mutateAsync(data);
   };
 
   return (

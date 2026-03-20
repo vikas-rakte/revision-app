@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
-import counterSlice from './components/CounterSlice/counterSlice';
-import PostSlice from './components/Posts/PostsSlice';
-import usersSlice from './components/Users/UserSlice/userSlice';
-import todosSlice from './components/Todos/Slice/todoSlice';
+import PostSlice from './components/Posts/posts-slice/posts.slice';
+import usersSlice from './components/Users/user-slice/user.slice';
+import todosSlice from './components/Todos/todos-slice/todo.slice';
+import counterSlice from './components/Counter/counter-slice/counter.slice';
 
 
 

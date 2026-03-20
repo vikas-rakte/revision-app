@@ -1,20 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import type { Post } from "../posts.types";
+import { getPosts } from "../posts.api";
 
-export type Post = {
-    "userId": number,
-    "id": number,
-    "title": string,
-    "body": string
-}
+
 
 const init: { data: Post[], status: string  } = { data: [], status: 'idle' }
 
-export const fetchPosts = createAsyncThunk('post/fetcher',
-    async ():Promise<Post[]> => {
-       const res = await fetch('https://jsonplaceholder.typicode.com/posts');
-       return await res.json();
-    }
-); 
+export const fetchPosts = createAsyncThunk('post/fetcher',getPosts); 
 
 const PostSlice = createSlice({
     name: 'Posts',
