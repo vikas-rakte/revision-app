@@ -1,3 +1,4 @@
+import React from "react";
 import type { User } from "./UserType";
 
 function UserCard({ user }: { user: User }) {
@@ -51,4 +52,4 @@ function UserCard({ user }: { user: User }) {
   );
 }
 
-export default UserCard;
+export default React.memo(UserCard);

@@ -1,32 +1,30 @@
 import "./user.css";
 import UserCard from "./UserCard";
-import { useDispatch, useSelector } from "react-redux";
-import { addManyUsers, type AppDispatch, type RootState } from "../../store";
-import { useEffect } from "react";
+
+import Loader from "../Loader/Loader";
+import useUsers from "./useUsers";
 
 const Users = () => {
-  const dispatch = useDispatch<AppDispatch>();
-  const usersEntity = useSelector((state: RootState) => state.Users);
+  const { users, isLoading, isError, error } = useUsers();
 
-  const users = usersEntity.ids.map((id) => usersEntity.entities[id]);
+  if (isLoading) {
+    return <Loader />;
+  }
 
-  useEffect(() => {
-    const getUsers = async () => {
-      const res = await fetch("https://jsonplaceholder.typicode.com/users");
-      const data = await res.json();
-      dispatch(addManyUsers(data));
-    };
-    getUsers();
-  }, []);
+  if (isError) {
+    return <p>{error?.message || "User fetch failed, please try again!"}</p>;
+  }
+
+  if (!users.length) {
+    return <p>No users found.</p>;
+  }
 
   return (
-    <>
-      <div className="users-card-container">
-        {users.map((user) => {
-          return <UserCard key={user.id} user={user} />;
-        })}
-      </div>
-    </>
+    <div className="users-card-container">
+      {users.map((user) => {
+        return <UserCard key={user.id} user={user} />;
+      })}
+    </div>
   );
 };
 
