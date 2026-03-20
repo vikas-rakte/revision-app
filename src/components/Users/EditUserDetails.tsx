@@ -1,91 +1,55 @@
-import type { User } from "./UserType";
-import { fetchUserInfo, updateUser } from "./userApi";
-import Loader from "../Loader/Loader";
 import { useParams } from "react-router-dom";
+import { useUserQuery } from "./useUserQuery";
+import { useUserForm } from "./useUserForm";
+import { useUpdateUser } from "./useUpdateUser";
+import Loader from "../Loader/Loader";
+import type { User } from "./UserType";
 import "./EditUserDetails.css";
-import { useForm } from "react-hook-form";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useEffect } from "react";
+import React from "react";
 
 const EditUserDetails = () => {
-  const { id } = useParams();
-  const queryClient = useQueryClient();
-
+  const { id = "" } = useParams<{ id: string }>();
+  const { data, isLoading, isError, error } = useUserQuery(id);
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-    reset,
     setError,
-  } = useForm<User>();
+  } = useUserForm(data);
 
-  const mutate = useMutation({
-    mutationFn: (data: User) => {
-      return updateUser(id, data);
-    },
-    onMutate: () => {},
-    onError: () => {
-      setError("root", {
-        message: "Failed to save user",
-      });
-    },
-    onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["users"] });
-    },
-  });
-
-  const { data, isLoading, isError, error } = useQuery({
-    queryKey: ["users", id],
-    queryFn: () => fetchUserInfo(id!),
-    enabled: !!id,
-  });
-
-  useEffect(() => {
-    if (data) reset(data);
-  }, [data, reset]);
+  const mutation = useUpdateUser(id, setError);
 
   if (!id) return <p>Invalid user ID</p>;
+
   if (isLoading) return <Loader />;
+  if (isError) return <p>{error.message}</p>;
 
-  if (isError) {
-    return <p>{(error as Error)?.message || "Failed to load user"}</p>;
-  }
-
-  const onSubmit = (formData: User) => {
-    mutate.mutate(formData);
+  const onSubmit = (data: User) => {
+    mutation.mutate(data);
   };
 
   return (
-    <form
-      className="edit-user-form"
-      onSubmit={handleSubmit(onSubmit)}
-      style={{ maxWidth: 500, margin: "0 auto" }}
-    >
-      <h2>Edit User Details</h2>
+    <form onSubmit={handleSubmit(onSubmit)} className="form-container">
+      <h2 className="form-title">Edit User Details</h2>
 
-      {/* Global Error */}
-      {errors.root && (
-        <p style={{ fontSize: "12px", color: "red" }}>{errors.root.message}</p>
-      )}
+      {errors.root && <p className="error-text">{errors.root.message}</p>}
 
-      <label>
-        Name:
+      <div className="form-group">
+        <label>Name</label>
         <input {...register("name", { required: "Name is required" })} />
-        <p style={{ fontSize: "12px", color: "red" }}>{errors.name?.message}</p>
-      </label>
+        <p className="error-text">{errors.name?.message}</p>
+      </div>
 
-      <label>
-        Username:
+      <div className="form-group">
+        <label>Username</label>
         <input
           {...register("username", { required: "Username is required" })}
         />
-        <p style={{ fontSize: "12px", color: "red" }}>
-          {errors.username?.message}
-        </p>
-      </label>
+        <p className="error-text">{errors.username?.message}</p>
+      </div>
 
-      <label>
-        Email:
+      <div className="form-group">
+        <label>Email</label>
         <input
           {...register("email", {
             required: "Email is required",
@@ -95,56 +59,53 @@ const EditUserDetails = () => {
             },
           })}
         />
-        <p style={{ fontSize: "12px", color: "red" }}>
-          {errors.email?.message}
-        </p>
-      </label>
+        <p className="error-text">{errors.email?.message}</p>
+      </div>
 
-      <fieldset>
+      <fieldset className="fieldset">
         <legend>Address</legend>
 
-        <label>
-          Street:
+        <div className="form-group">
+          <label>Street</label>
           <input {...register("address.street")} />
-        </label>
+        </div>
 
-        <label>
-          Suite:
+        <div className="form-group">
+          <label>Suite</label>
           <input {...register("address.suite")} />
-        </label>
+        </div>
 
-        <label>
-          City:
+        <div className="form-group">
+          <label>City</label>
           <input {...register("address.city")} />
-        </label>
+        </div>
 
-        <label>
-          Zipcode:
+        <div className="form-group">
+          <label>Zipcode</label>
           <input {...register("address.zipcode")} />
-        </label>
+        </div>
       </fieldset>
 
-      <label>
-        Phone:
+      <div className="form-group">
+        <label>Phone</label>
         <input {...register("phone", { required: "Phone is required" })} />
-        <p style={{ fontSize: "12px", color: "red" }}>
-          {errors.phone?.message}
-        </p>
-      </label>
+        <p className="error-text">{errors.phone?.message}</p>
+      </div>
 
-      <fieldset>
+      <fieldset className="fieldset">
         <legend>Company</legend>
-        <label>
-          Name:
+
+        <div className="form-group">
+          <label>Name</label>
           <input {...register("company.name")} />
-        </label>
+        </div>
       </fieldset>
 
-      <button type="submit" disabled={isSubmitting}>
+      <button type="submit" disabled={isSubmitting} className="submit-btn">
         {isSubmitting ? "Saving..." : "Save"}
       </button>
     </form>
   );
 };
 
-export default EditUserDetails;
+export default React.memo(EditUserDetails);

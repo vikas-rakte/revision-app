@@ -15,7 +15,7 @@ export const fetchUserInfo = async (id: string) => {
 
 
 
-export const updateUser = async (id, payload) => {
+export const updateUser = async (id: string, payload: User) => {
     const res = await fetch(`https://jsonplaceholder.typicode.com/users/${id}`,{
     method: 'PUT',
        body: JSON.stringify(payload),
